@@ -1,4 +1,8 @@
-import { Schema, model, connect } from 'mongoose';
+export type UserName = {
+  firstname: string;
+  middlename: string;
+  lastname: string;
+};
 
 export type Guardian = {
   fatherName: string;
@@ -7,12 +11,6 @@ export type Guardian = {
   motherName: string;
   motherOccupation: string;
   motherContactNo: string;
-};
-
-export type UserName = {
-  firstname: string;
-  middlename: string;
-  lastname: string;
 };
 
 export type LocalGuardian = {
@@ -24,12 +22,13 @@ export type LocalGuardian = {
 
 export type Student = {
   id: string;
+  password: string;
   name: UserName;
-  gender: 'male' | 'female';
+  gender: 'male' | 'female' | 'other';
   dateOfBirth?: string;
   email: string;
   contactNo: string;
-  emergyncyContactNo: string;
+  emergencyContactNo: string;
   bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
   presentAddress: string;
   permanentAddress: string;
@@ -37,4 +36,5 @@ export type Student = {
   localGuardian: LocalGuardian;
   profileImg?: string;
   isActive: 'active' | 'blocked';
+  isDeleted: boolean;
 };

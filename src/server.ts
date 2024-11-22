@@ -10,7 +10,7 @@ async function main() {
       console.log(`Mamun listening on port ${config.port}`);
     });
   } catch (err) {
-    console.log('error occurs');
+    console.log(err);
   }
 }
 

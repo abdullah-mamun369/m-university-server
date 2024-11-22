@@ -1,13 +1,16 @@
 import globals from 'globals';
 import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
 
 const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
 
-module.exports = [
-  // Any other config imports go at the top
-  eslintPluginPrettierRecommended,
-];
+// module.exports = [
+//   // Any other config imports go at the top
+//   eslintPluginPrettierRecommended,
+// ];
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -28,4 +31,5 @@ export default [
   },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
+  eslintPluginPrettierRecommended,
 ];
