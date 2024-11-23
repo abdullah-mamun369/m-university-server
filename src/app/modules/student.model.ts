@@ -7,16 +7,31 @@ import {
 } from './student/student.interface';
 
 const userNameSchema = new Schema<UserName>({
-  firstname: { type: String, required: [true, 'First name is required'] },
-  middlename: { type: String },
-  lastname: { type: String, required: [true, 'Last name is required'] },
+  firstname: {
+    type: String,
+    required: [true, 'First name is required'],
+    trim: true,
+    maxlength: [20, 'Name can not be more than 20 characters'],
+  },
+  middlename: { type: String, trim: true },
+  lastname: {
+    type: String,
+    required: [true, 'Last name is required'],
+    trim: true,
+    maxlength: [20, 'Name can not be more than 20 characters'],
+  },
 });
 
 const guardianSchema = new Schema<Guardian>({
-  fatherName: { type: String, required: [true, 'Father name is required'] },
+  fatherName: {
+    type: String,
+    required: [true, 'Father name is required'],
+    trim: true,
+  },
   fatherOccupation: {
     type: String,
     required: [true, 'Father Occupation is required'],
+    trim: true,
   },
   fatherContactNo: {
     type: String,
