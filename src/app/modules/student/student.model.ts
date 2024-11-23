@@ -4,17 +4,17 @@ import {
   LocalGuardian,
   Student,
   UserName,
-} from './student/student.interface';
+} from './student.interface';
 
 const userNameSchema = new Schema<UserName>({
-  firstname: {
+  firstName: {
     type: String,
     required: [true, 'First name is required'],
     trim: true,
     maxlength: [20, 'Name can not be more than 20 characters'],
   },
-  middlename: { type: String, trim: true },
-  lastname: {
+  middleName: { type: String, trim: true },
+  lastName: {
     type: String,
     required: [true, 'Last name is required'],
     trim: true,

@@ -1,7 +1,7 @@
 export type UserName = {
-  firstname: string;
-  middlename: string;
-  lastname: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
 };
 
 export type Guardian = {

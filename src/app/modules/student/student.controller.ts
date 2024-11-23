@@ -1,10 +1,16 @@
 import { Request, Response } from 'express';
 import { StudentServices } from './student.service';
+import studentValidationSchema from './student.validation';
 // import studentValidationSchema from './student.joi.validation';
 
 const createStudent = async (req: Request, res: Response) => {
   try {
     const { student: studentData } = req.body;
+
+    //data validation with zod
+    const zodparsedData = studentValidationSchema.parse(studentData);
+
+    const result = await StudentServices.createStudentIntoDB(zodparsedData);
 
     // //data validation with joi
     // const { error, value } = studentValidationSchema.validate(studentData);
@@ -12,7 +18,8 @@ const createStudent = async (req: Request, res: Response) => {
     // //data validation with joi
     // const result = await StudentServices.createStudentIntoDB(value);
 
-    const result = await StudentServices.createStudentIntoDB(studentData);
+    // //Normal data send, mongoose default validation.
+    // const result = await StudentServices.createStudentIntoDB(studentData);
 
     // //data validation with joi
     // if (error) {
