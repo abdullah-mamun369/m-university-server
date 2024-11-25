@@ -69,14 +69,21 @@ const localGuardianSchema = new Schema<TLocalGuardian>({
 //By Static method
 const studentSchema = new Schema<TStudent, StudentModel>(
   {
-    id: { type: String, required: [true, 'ID is required'], unique: true },
+    id: {
+      type: String,
+      required: [true, 'ID is required'],
+      unique: true,
+    },
     user: {
       type: Schema.Types.ObjectId,
-      required: [true, 'User _id is required'],
+      required: [true, 'User id is required'],
       unique: true,
       ref: 'User',
     },
-    name: { type: userNameSchema, required: [true, 'Name is required'] },
+    name: {
+      type: userNameSchema,
+      required: [true, 'Name is required'],
+    },
     gender: {
       type: String,
       enum: {
@@ -85,7 +92,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       },
       required: [true, 'Gender is required'],
     },
-    dateOfBirth: { type: String },
+    dateOfBirth: { type: Date },
     email: {
       type: String,
       required: [true, 'Email is required'],

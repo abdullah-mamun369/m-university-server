@@ -1,8 +1,14 @@
 import express from 'express';
-import { userControllers } from './user.controller';
+import { UserControllers } from './user.controller';
+import validateRequest from '../../miiddlewares/validateRequest';
+import { createStudentValidationSchema } from '../student/student.validation';
 
 const router = express.Router();
 
-router.post('/create-student', userControllers.createStudent);
+router.post(
+  '/create-student',
+  validateRequest(createStudentValidationSchema), //validation middleware, by high rank function we can send paramater.
+  UserControllers.createStudent,
+);
 
 export const UserRoutes = router;
