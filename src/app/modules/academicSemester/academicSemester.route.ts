@@ -1,6 +1,6 @@
 import express from 'express';
 import { AcademicSemesterControllers } from './academicSemester.controller';
-import validateRequest from '../../miiddlewares/validateRequest';
+import validateRequest from '../../middlewares/validateRequest';
 import { AcademicSemesterValidations } from './academicSemester.validtion';
 
 // import validateRequest from '../../miiddlewares/validateRequest';

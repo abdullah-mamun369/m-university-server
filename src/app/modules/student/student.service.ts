@@ -1,27 +1,37 @@
 import { Student } from './student.model';
 
-const getAllStudentsFromBD = async () => {
-  const result = await Student.find();
-  return result;
-};
-
-const getSingleStudentFromBD = async (id: string) => {
-  // //Find one method
-  // const result = await Student.findOne({ id });
-
-  //aggregation method
-  const result = await Student.aggregate([{ $match: { id: id } }]);
+const getAllStudentsFromDB = async () => {
+  const result = await Student.find()
+    .populate('admissionSemester')
+    .populate({
+      path: 'academicDepartment',
+      populate: {
+        path: 'academicFaculty',
+      },
+    });
 
   return result;
 };
 
-const deleteStudentFromBD = async (id: string) => {
+const getSingleStudentFromDB = async (id: string) => {
+  const result = await Student.findOne({ id })
+    .populate('admissionSemester')
+    .populate({
+      path: 'academicDepartment',
+      populate: {
+        path: 'academicFaculty',
+      },
+    });
+  return result;
+};
+
+const deleteStudentFromDB = async (id: string) => {
   const result = await Student.updateOne({ id }, { isDeleted: true });
   return result;
 };
 
 export const StudentServices = {
-  getAllStudentsFromBD,
-  getSingleStudentFromBD,
-  deleteStudentFromBD,
+  getAllStudentsFromDB,
+  getSingleStudentFromDB,
+  deleteStudentFromDB,
 };
