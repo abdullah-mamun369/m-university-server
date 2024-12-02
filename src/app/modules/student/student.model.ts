@@ -149,7 +149,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
 
 //Use Virtual for getting a data which is not exist in database but has some portion in the database like name has three portion.
 studentSchema.virtual('fullName').get(function () {
-  return `${this.name.firstName} ${this.name.middleName} ${this.name.lastName}`;
+  return `${this?.name?.firstName} ${this?.name?.middleName} ${this?.name?.lastName}`;
 });
 
 //Query middleware for skip the delete data, find method
