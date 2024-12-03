@@ -28,7 +28,6 @@ const getAllAdmins = catchAsync(async (req, res) => {
 
 const updateAdmin = catchAsync(async (req, res) => {
   const { id } = req.params;
-  console.log(`Admin update id ${id}`);
 
   const { admin } = req.body;
   const result = await AdminServices.updateAdminIntoDB(id, admin);
@@ -43,7 +42,6 @@ const updateAdmin = catchAsync(async (req, res) => {
 
 const deleteAdmin = catchAsync(async (req, res) => {
   const { id } = req.params;
-  console.log(`Controller ${id}`);
 
   const result = await AdminServices.deleteAdminFromDB(id);
 
