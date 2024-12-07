@@ -4,18 +4,35 @@ import { AcademicSemester } from '../academicSemester/academicSemester.model';
 import { TSemesterRegistration } from './semesterRegistration.interface';
 import { SemesterRegistration } from './semesterRegistration.model';
 import QueryBuilder from '../../builder/QueryBuilder';
+import { RegistrationStatus } from './semesterRegistration.constant';
 
 const createSemesterRegistrationIntoDB = async (
   payload: TSemesterRegistration,
 ) => {
   /**
-   
+   * Step1: Check if there any registered semester that is already 'UPCOMING'|'ONGOING'
    * Step2: Check if the semester is exist
    * Step3: Check if the semester is already registered!
    * Step4: Create the semester registration
    */
 
   const academicSemester = payload?.academicSemester;
+
+  //check if there any registered semester that is already 'UPCOMING'|'ONGOING'
+  const isThereAnyUpcomingOrOngoingSEmester =
+    await SemesterRegistration.findOne({
+      $or: [
+        { status: RegistrationStatus.UPCOMING },
+        { status: RegistrationStatus.ONGOING },
+      ],
+    });
+
+  if (isThereAnyUpcomingOrOngoingSEmester) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `There is aready an ${isThereAnyUpcomingOrOngoingSEmester.status} registered semester !`,
+    );
+  }
 
   // check if the semester is exist
   const isAcademicSemesterExists =
