@@ -132,7 +132,26 @@ const createOfferedCourseIntoDB = async (payload: TOfferedCourse) => {
 };
 
 const getAllOfferedCoursesFromDB = async (query: Record<string, unknown>) => {
-  const offeredCourseQuery = new QueryBuilder(OfferedCourse.find(), query)
+  const offeredCourseQuery = new QueryBuilder(
+    OfferedCourse.find()
+      .populate({
+        path: 'semesterRegistration',
+        populate: {
+          path: 'academicSemester',
+        },
+      })
+      .populate('academicSemester')
+      .populate('academicFaculty')
+      .populate({
+        path: 'academicDepartment',
+        populate: {
+          path: 'academicFaculty',
+        },
+      })
+      .populate('course')
+      .populate('faculty'),
+    query,
+  )
     .filter()
     .sort()
     .paginate()
