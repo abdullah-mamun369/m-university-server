@@ -149,7 +149,15 @@ const getAllOfferedCoursesFromDB = async (query: Record<string, unknown>) => {
         },
       })
       .populate('course')
-      .populate('faculty'),
+      .populate({
+        path: 'faculty',
+        populate: {
+          path: 'academicDepartment',
+          populate: {
+            path: 'academicFaculty',
+          },
+        },
+      }),
     query,
   )
     .filter()
