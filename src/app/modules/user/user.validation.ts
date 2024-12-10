@@ -9,6 +9,6 @@ const userValidationSchema = z.object({
     .optional(),
 });
 
-export const UserValidaton = {
+export const UserValidation = {
   userValidationSchema,
 };

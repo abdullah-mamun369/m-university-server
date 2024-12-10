@@ -3,6 +3,11 @@ import httpStatus from 'http-status';
 import mongoose from 'mongoose';
 import config from '../../config';
 import AppError from '../../errors/AppError';
+import { TAdmin } from '../Admin/admin.interface';
+import { Admin } from '../Admin/admin.model';
+import { TFaculty } from '../Faculty/faculty.interface';
+import { Faculty } from '../Faculty/faculty.model';
+import { AcademicDepartment } from '../academicDepartment/academicDepartment.model';
 import { TStudent } from '../student/student.interface';
 import { Student } from '../student/student.model';
 import { AcademicSemester } from './../academicSemester/academicSemester.model';
@@ -13,10 +18,6 @@ import {
   generateFacultyId,
   generateStudentId,
 } from './user.utils';
-import { AcademicDepartment } from '../academicDepartment/academicDepartment.model';
-import { Faculty } from '../Faculty/faculty.model';
-import { TFaculty } from '../Faculty/faculty.interface';
-import { Admin } from '../Admin/admin.model';
 
 const createStudentIntoDB = async (password: string, payload: TStudent) => {
   // create a user object
@@ -33,9 +34,8 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
     payload.admissionSemester,
   );
 
-  // Ensure admissionSemester is not null
   if (!admissionSemester) {
-    throw new Error('Academic Semester not found');
+    throw new AppError(400, 'Admission semester not found');
   }
 
   const session = await mongoose.startSession();
@@ -131,7 +131,7 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
   }
 };
 
-const createAdminIntoDB = async (password: string, payload: TFaculty) => {
+const createAdminIntoDB = async (password: string, payload: TAdmin) => {
   // create a user object
   const userData: Partial<TUser> = {};
 
@@ -177,7 +177,7 @@ const createAdminIntoDB = async (password: string, payload: TFaculty) => {
   }
 };
 
-export const UserService = {
+export const UserServices = {
   createStudentIntoDB,
   createFacultyIntoDB,
   createAdminIntoDB,
