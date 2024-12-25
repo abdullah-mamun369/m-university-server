@@ -22,6 +22,10 @@ const auth = (...requiredRoles: TUserRole[]) => {
       config.jwt_access_secret as string,
     ) as JwtPayload;
 
+    if (!decoded) {
+      throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized !');
+    }
+
     const { role, userId, iat } = decoded;
 
     // checking if the user is exist
