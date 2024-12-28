@@ -1,11 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import httpStatus from 'http-status';
 import QueryBuilder from '../../builder/QueryBuilder';
+import AppError from '../../errors/AppError';
 import { AcademicDepartmentSearchableFields } from './academicDepartment.constant';
 import { TAcademicDepartment } from './academicDepartment.interface';
 import { AcademicDepartment } from './academicDepartment.model';
 
 const createAcademicDepartmentIntoDB = async (payload: TAcademicDepartment) => {
-  const result = await AcademicDepartment.create(payload);
-  return result;
+  try {
+    const result = await AcademicDepartment.create(payload);
+    return result;
+  } catch (err) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'The Department is already Exist!',
+    );
+  }
 };
 
 const getAllAcademicDepartmentsFromDB = async (

@@ -1,11 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import httpStatus from 'http-status';
 import QueryBuilder from '../../builder/QueryBuilder';
+import AppError from '../../errors/AppError';
 import { AcademicFacultySearchableFields } from './academicFaculty.constant';
 import { TAcademicFaculty } from './academicFaculty.interface';
 import { AcademicFaculty } from './academicFaculty.model';
 
 const createAcademicFacultyIntoDB = async (payload: TAcademicFaculty) => {
-  const result = await AcademicFaculty.create(payload);
-  return result;
+  try {
+    const result = await AcademicFaculty.create(payload);
+    return result;
+  } catch (err) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'The faculty is already Exist!');
+  }
 };
 
 const getAllAcademicFacultiesFromDB = async (
