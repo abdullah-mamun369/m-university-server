@@ -5,10 +5,14 @@ import mongoose from 'mongoose';
 import config from '../../config';
 import AppError from '../../errors/AppError';
 import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
+import { AcademicDepartment } from '../academicDepartment/academicDepartment.model';
+import { AcademicSemester } from '../academicSemester/academicSemester.model';
 import { TAdmin } from '../Admin/admin.interface';
 import { Admin } from '../Admin/admin.model';
 import { TFaculty } from '../Faculty/faculty.interface';
 import { Faculty } from '../Faculty/faculty.model';
+import { TStudent } from '../student/student.interface';
+import { Student } from '../student/student.model';
 import { TUser } from './user.interface';
 import { User } from './user.model';
 import {
@@ -16,10 +20,6 @@ import {
   generateFacultyId,
   generateStudentId,
 } from './user.utils';
-import { AcademicSemester } from '../academicSemester/academicSemester.model';
-import { AcademicDepartment } from '../academicDepartment/academicDepartment.model';
-import { Student } from '../student/student.model';
-import { TStudent } from '../student/student.interface';
 
 const createStudentIntoDB = async (
   file: any,
@@ -54,6 +54,7 @@ const createStudentIntoDB = async (
   if (!academicDepartment) {
     throw new AppError(400, 'Aademic department not found');
   }
+
   payload.academicFaculty = academicDepartment.academicFaculty;
 
   const session = await mongoose.startSession();
@@ -67,7 +68,7 @@ const createStudentIntoDB = async (
       const imageName = `${userData.id}${payload?.name?.firstName}`;
       const path = file?.path;
 
-      //send image to cloudinary
+      ///send image to cloudinary
       const cloudinaryResult: any = await sendImageToCloudinary(
         imageName,
         path,
@@ -144,7 +145,7 @@ const createFacultyIntoDB = async (
       const imageName = `${userData.id}${payload?.name?.firstName}`;
       const path = file?.path;
 
-      //send image to cloudinary
+      ///send image to cloudinary
       const cloudinaryResult: any = await sendImageToCloudinary(
         imageName,
         path,
