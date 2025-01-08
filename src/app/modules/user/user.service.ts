@@ -64,9 +64,14 @@ const createStudentIntoDB = async (
     //set  generated id
     userData.id = await generateStudentId(admissionSemester);
 
+    console.log(file);
+
     if (file) {
-      const imageName = `${userData.id}${payload?.name?.firstName}`;
+      const imageName = `${userData.id}${payload?.name?.firstName}${payload?.name?.middleName}${payload?.name?.lastName}`;
+
       const path = file?.path;
+      console.log('file is present');
+      console.log(path);
 
       ///send image to cloudinary
       const cloudinaryResult: any = await sendImageToCloudinary(
@@ -75,6 +80,9 @@ const createStudentIntoDB = async (
       );
 
       const secure_url = cloudinaryResult.secure_url;
+
+      console.log(`secured url ${secure_url}`);
+
       payload.profileImg = secure_url as string;
     }
 
@@ -142,7 +150,7 @@ const createFacultyIntoDB = async (
     userData.id = await generateFacultyId();
 
     if (file) {
-      const imageName = `${userData.id}${payload?.name?.firstName}`;
+      const imageName = `${userData.id}${payload?.name?.firstName}${payload?.name?.middleName}${payload?.name?.lastName}`;
       const path = file?.path;
 
       ///send image to cloudinary
@@ -208,7 +216,7 @@ const createAdminIntoDB = async (
     userData.id = await generateAdminId();
 
     if (file) {
-      const imageName = `${userData.id}${payload?.name?.firstName}`;
+      const imageName = `${userData.id}${payload?.name?.firstName}${payload?.name?.middleName}${payload?.name?.lastName}`;
       const path = file?.path;
 
       ///send image to cloudinary
